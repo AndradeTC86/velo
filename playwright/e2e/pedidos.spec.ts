@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { generateOrderCode } from '../support/helpers'
+import { OrderLockupPage } from '../support/pages/ConsultaPedidoPage'
 
 /// AAA - Arrange, Act, Assert
 
@@ -29,8 +30,8 @@ test.describe('Consulta de Pedido', async () => {
         }
     
         // Act    
-        await page.getByLabel('Número do Pedido').fill(order.number)    
-        await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+        const orderLockupPage = new OrderLockupPage(page)
+        await orderLockupPage.searchOrder(order.number)
 
         // Assert
         await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -67,7 +68,7 @@ test.describe('Consulta de Pedido', async () => {
         await expect(statusBadge).toHaveClass(/text-green-700/)
 
         const statusIcon = statusBadge.locator('svg')
-        expect(statusIcon).toHaveClass(/lucide-circle-check-big/)
+        await expect(statusIcon).toHaveClass(/lucide-circle-check-big/)
     })
 
     test('deve consultar um pedido reprovado', async ({ page }) => {
@@ -85,8 +86,8 @@ test.describe('Consulta de Pedido', async () => {
         } 
     
         // Act    
-        await page.getByLabel('Número do Pedido').fill(order.number)    
-        await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+        const orderLockupPage = new OrderLockupPage(page)
+        await orderLockupPage.searchOrder(order.number)
 
         // Assert
         await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -123,7 +124,7 @@ test.describe('Consulta de Pedido', async () => {
         await expect(statusBadge).toHaveClass(/text-red-700/)
 
         const statusIcon = statusBadge.locator('svg')
-        expect(statusIcon).toHaveClass(/lucide-circle-x/)
+        await expect(statusIcon).toHaveClass(/lucide-circle-x/)
     })
 
     test('deve consultar um pedido que está em análise', async ({ page }) => {
@@ -141,8 +142,8 @@ test.describe('Consulta de Pedido', async () => {
         } 
     
         // Act    
-        await page.getByLabel('Número do Pedido').fill(order.number)    
-        await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+        const orderLockupPage = new OrderLockupPage(page)
+        await orderLockupPage.searchOrder(order.number)
 
         // Assert
         await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -180,7 +181,7 @@ test.describe('Consulta de Pedido', async () => {
         await expect(statusBadge).toHaveClass(/text-amber-700/)
 
         const statusIcon = statusBadge.locator('svg')
-        expect(statusIcon).toHaveClass(/lucide-clock/)
+        await expect(statusIcon).toHaveClass(/lucide-clock/)
     })
 
     test('deve exibir mensagem quando o pedido não é encontrado', async ({ page })=> {
@@ -188,8 +189,8 @@ test.describe('Consulta de Pedido', async () => {
         const order = generateOrderCode()    
         
         // Act    
-        await page.getByLabel('Número do Pedido').fill(order)    
-        await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+        const orderLockupPage = new OrderLockupPage(page)
+        await orderLockupPage.searchOrder(order)
 
         // Assert
         await expect(page.locator('#root')).toMatchAriaSnapshot(`
