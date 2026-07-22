@@ -96,10 +96,10 @@ test.describe('Consulta de Pedido', () => {
         await orderLookupPage.validateOrderNotFound()
     })
 
-    test('deve exibir mensagem quando o pedido em um formato inválido não é encontrado', async ({ page })=> {        
+    test('deve exibir mensagem quando busca por pedido em formato inválido', async ({ page })=> {        
         // Act    
         const orderLookupPage = new OrderLookupPage(page)
-        await orderLookupPage.searchOrder('ABC?')
+        await orderLookupPage.searchOrder('ABC-9999-??')
 
         // Assert
         await orderLookupPage.validateOrderNotFound()
