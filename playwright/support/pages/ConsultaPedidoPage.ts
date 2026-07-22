@@ -1,7 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Page, expect } from '@playwright/test'
 
 type OrderStatus = 'APROVADO' | 'REPROVADO' | 'EM_ANALISE'
+
+export type OrderDetails = {
+    number: string
+    status: OrderStatus
+    color: string
+    wheels: string,
+    customer: {
+        name: string;
+        email: string
+        }
+    payment: string
+}
 
 export class OrderLookupPage {
     constructor(private page: Page) {}
@@ -35,8 +46,8 @@ export class OrderLookupPage {
         await expect(statusBadge.locator('svg')).toHaveClass(new RegExp(classes.icon))        
     }
 
-    async validateOrderDetails(order: any){
-        await expect(this.page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
+    async validateOrderDetails(order: OrderDetails){
+        const snapshot = `
             - img
             - paragraph: Pedido
             - paragraph: ${order.number}
@@ -64,14 +75,16 @@ export class OrderLookupPage {
             - heading "Pagamento" [level=4]
             - paragraph: ${order.payment}
             - paragraph: /R\\$ \\d+\\.\\d+,\\d+/
-        `)
+        `
+    await expect(this.page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(snapshot)
     }
 
     async validateOrderNotFound(){
-        await expect(this.page.locator('#root')).toMatchAriaSnapshot(`
+        const snapshot = `
         - img
         - heading "Pedido não encontrado" [level=3]
         - paragraph: Verifique o número do pedido e tente novamente
-        `)
+        `
+        await expect(this.page.locator('#root')).toMatchAriaSnapshot(snapshot)
     }
 }

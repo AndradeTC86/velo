@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { generateOrderCode } from '../support/helpers'
-import { OrderLookupPage } from '../support/pages/ConsultaPedidoPage'
+import { OrderLookupPage, OrderDetails } from '../support/pages/ConsultaPedidoPage'
 
 /// AAA - Arrange, Act, Assert
 
@@ -17,9 +17,9 @@ test.describe('Consulta de Pedido', () => {
 
     test('deve consultar um pedido aprovado', async ({ page }) => {
         // Test Data
-        const order = {
+        const order: OrderDetails = {
             number: 'VLO-JZURBQ',
-            status: 'APROVADO' as const,
+            status: 'APROVADO',
             color: 'Midnight Black',
             wheels: 'aero Wheels',
             customer: {
@@ -40,9 +40,9 @@ test.describe('Consulta de Pedido', () => {
 
     test('deve consultar um pedido reprovado', async ({ page }) => {
         // Test Data
-        const order = {
+        const order: OrderDetails = {
             number: 'VLO-EJ0BRO',
-            status: 'REPROVADO' as const,
+            status: 'REPROVADO',
             color: 'Lunar White',
             wheels: 'sport Wheels',
             customer: {
@@ -63,9 +63,9 @@ test.describe('Consulta de Pedido', () => {
 
     test('deve consultar um pedido que está em análise', async ({ page }) => {
         // Test Data
-        const order = {
+        const order: OrderDetails = {
             number: 'VLO-R95VO9',
-            status: 'EM_ANALISE' as const,
+            status: 'EM_ANALISE',
             color: 'Glacier Blue',
             wheels: 'sport Wheels',
             customer: {
