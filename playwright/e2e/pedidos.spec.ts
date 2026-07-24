@@ -1,22 +1,21 @@
 import { test, expect } from '@playwright/test'
 import { generateOrderCode } from '../support/helpers'
 import { OrderLookupPage, OrderDetails } from '../support/pages/ConsultaPedidoPage'
-
-/// AAA - Arrange, Act, Assert
+import { LandingPage } from '../support/pages/LandingPage'
+import { Navbar } from '../support/components/Navbar'
 
 test.describe('Consulta de Pedido', () => {
 
-    test.beforeEach(async ({ page }) => {
-        // Arrange 
-        await page.goto('http://localhost:5173/')
-        await expect(page.getByTestId('hero-section').getByRole('heading')).toContainText('Velô Sprint')
+    let orderLookupPage: OrderLookupPage
 
-        await page.getByRole('link', { name: 'Consultar Pedido' }).click()
-        await expect(page.getByRole('heading')).toContainText('Consultar Pedido')
+    test.beforeEach(async ({ page }) => {
+        await new LandingPage(page).goto()
+        await new Navbar(page).clickOrderLookupLink()
+        orderLookupPage = new OrderLookupPage(page)
+        orderLookupPage.validatePageLoaded()
     })
 
     test('deve consultar um pedido aprovado', async ({ page }) => {
-        // Test Data
         const order: OrderDetails = {
             number: 'VLO-JZURBQ',
             status: 'APROVADO',
@@ -27,19 +26,13 @@ test.describe('Consulta de Pedido', () => {
                 email: 'driver@mailinator.com'
             },
             payment: 'À Vista'
-        }
-    
-        // Act    
-        const orderLookupPage = new OrderLookupPage(page)
+        }    
         await orderLookupPage.searchOrder(order.number)
-
-        // Assert
         await orderLookupPage.validateOrderDetails(order)
         await orderLookupPage.validateStatusBadge(order.status)
     })
 
     test('deve consultar um pedido reprovado', async ({ page }) => {
-        // Test Data
         const order: OrderDetails = {
             number: 'VLO-EJ0BRO',
             status: 'REPROVADO',
@@ -50,19 +43,13 @@ test.describe('Consulta de Pedido', () => {
                 email: 'driver@mailinator.com'
             },
             payment: 'À Vista'
-        } 
-    
-        // Act    
-        const orderLookupPage = new OrderLookupPage(page)
+        }     
         await orderLookupPage.searchOrder(order.number)
-
-        // Assert
         await orderLookupPage.validateOrderDetails(order)
         await orderLookupPage.validateStatusBadge(order.status)
     })
 
     test('deve consultar um pedido que está em análise', async ({ page }) => {
-        // Test Data
         const order: OrderDetails = {
             number: 'VLO-R95VO9',
             status: 'EM_ANALISE',
@@ -73,35 +60,20 @@ test.describe('Consulta de Pedido', () => {
                 email: 'driver@mailinator.com'
             },
             payment: 'À Vista'
-        } 
-    
-        // Act    
-        const orderLookupPage = new OrderLookupPage(page)
+        }     
         await orderLookupPage.searchOrder(order.number)
-
-        // Assert
         await orderLookupPage.validateOrderDetails(order)
         await orderLookupPage.validateStatusBadge(order.status)
     })
 
     test('deve exibir mensagem quando o pedido não é encontrado', async ({ page })=> {
-        // Test Data
-        const order = generateOrderCode()    
-        
-        // Act    
-        const orderLookupPage = new OrderLookupPage(page)
+        const order = generateOrderCode()        
         await orderLookupPage.searchOrder(order)
-
-        // Assert
         await orderLookupPage.validateOrderNotFound()
     })
 
     test('deve exibir mensagem quando busca por pedido em formato inválido', async ({ page })=> {        
-        // Act    
-        const orderLookupPage = new OrderLookupPage(page)
         await orderLookupPage.searchOrder('ABC-9999-??')
-
-        // Assert
         await orderLookupPage.validateOrderNotFound()
     })
 })

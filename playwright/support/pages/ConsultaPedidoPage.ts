@@ -87,4 +87,8 @@ export class OrderLookupPage {
         `
         await expect(this.page.locator('#root')).toMatchAriaSnapshot(snapshot)
     }
+
+    async validatePageLoaded(){
+        await expect(this.page.getByRole('heading')).toContainText('Consultar Pedido')
+    }
 }
