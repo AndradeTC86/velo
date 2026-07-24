@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { generateOrderCode } from '../support/helpers'
-import { OrderLookupPage, OrderDetails } from '../support/pages/ConsultaPedidoPage'
+import { OrderLookupPage, OrderDetails } from '../support/pages/OrderLookupPage'
 import { LandingPage } from '../support/pages/LandingPage'
 import { Navbar } from '../support/components/Navbar'
 
