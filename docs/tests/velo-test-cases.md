@@ -1,4 +1,4 @@
-# Documento de Casos de Testes - Velô Sprint
+# Documento de Casos de Testes - Velô Sprint (Gerado pelo Antigravity)
 
 Este documento contém os casos de teste funcionais para o sistema Velô Sprint, cobrindo os módulos de Landing Page, Configurador de Veículo, Checkout/Pedido, Análise de Crédito, Confirmação e Consulta de Pedidos, para o perfil Cliente.
 

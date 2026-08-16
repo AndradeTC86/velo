@@ -1,4 +1,4 @@
-# Casos de Teste - Velô Sprint - Configurador de Veículo Elétrico
+# Casos de Teste - Velô Sprint - Configurador de Veículo Elétrico (Gerado pelo Github Copilot)
 
 ## Visão Geral
 
