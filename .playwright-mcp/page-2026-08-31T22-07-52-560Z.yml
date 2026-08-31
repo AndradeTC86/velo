@@ -5,7 +5,7 @@
   - generic [ref=f1e3]:
     - generic [ref=f1e5]:
       - heading "Velô Motors" [level=2] [ref=f1e7]
-      - img "Velô Sprint - glacier-blue with aero wheels" [ref=f1e10]
+      - img "Velô Sprint - lunar-white with aero wheels" [ref=f1e73]
     - generic [ref=f1e12]:
       - generic [ref=f1e13]:
         - generic [ref=f1e14]:
@@ -23,7 +23,7 @@
             - button "Lunar White" [ref=f1e29] [cursor=pointer]
         - generic [ref=f1e32]:
           - heading "Rodas" [level=3] [ref=f1e33]
-          - button "Aero Wheels aero Incluso" [ref=f1e34] [cursor=pointer]:
+          - button "Aero Wheels aero Incluso" [active] [ref=f1e34] [cursor=pointer]:
             - generic [ref=f1e38]:
               - paragraph [ref=f1e39]: Aero Wheels
               - paragraph [ref=f1e40]: aero
